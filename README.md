@@ -1,5 +1,8 @@
 # Vet Anka Veteriner Kliniği — Web Sitesi
 
+**🌐 Canlı site:** https://anka-veteriner-22f10.web.app
+**🔐 Yönetim paneli:** https://anka-veteriner-22f10.web.app/admin.html
+
 Sefaköy, Küçükçekmece'deki Vet Anka Veteriner Kliniği için tanıtım ve iletişim amaçlı,
 mobil uyumlu web sitesi. İçerik, giriş korumalı bir yönetim panelinden düzenlenir ve
 **Kaydet'e basıldığında tüm ziyaretçilerde anında canlı** olur (Firebase Firestore).

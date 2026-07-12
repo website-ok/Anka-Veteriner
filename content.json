@@ -1,0 +1,41 @@
+{
+  "clinicName": "Vet Anka Veteriner Kliniği",
+  "phone": "0507 788 17 45",
+  "whatsapp": "905077881745",
+  "addressLine1": "Tevfik Bey Mahallesi, Mektep Sokak No:19",
+  "addressLine2": "Sefaköy, 34295 Küçükçekmece / İstanbul",
+  "hours": "Açılış saati: 13:30 · Güncel çalışma saatleri için lütfen arayın",
+  "googleScore": "4,9",
+  "googleCount": "86",
+  "yandexScore": "5,0",
+  "yandexCount": "13",
+  "heroEyebrow": "Sefaköy · Küçükçekmece",
+  "heroTitle": "Dostlarınız emin ellerde",
+  "heroLead": "Kedi, köpek, kuş ve egzotik hayvanlar için şefkatli ve titiz bakım. Muayeneden ameliyata, aşıdan laboratuvara kadar tüm ihtiyaçlarınız tek bir çatı altında.",
+  "footerAbout": "Sefaköy, Küçükçekmece'de kedi, köpek, kuş ve egzotik hayvanlar için şefkatli veteriner hizmeti.",
+  "whyCards": [
+    { "icon": "🩺", "title": "Uzman Muayene", "text": "Kedi, köpek, kuş ve egzotik hayvanlar için detaylı sağlık kontrolü ve doğru teşhis." },
+    { "icon": "💉", "title": "Düzenli Aşı Takibi", "text": "Karma ve iç-dış parazit aşılarınız SMS hatırlatmalarıyla hiç aksamadan takip edilir." },
+    { "icon": "🔬", "title": "Klinik Laboratuvar", "text": "Kan tahlili, biyokimya, hemogram ve röntgen ile hızlı ve güvenilir sonuçlar." },
+    { "icon": "🏠", "title": "Eve Hizmet", "text": "Kliniğe gelmenin zor olduğu durumlarda dostlarınıza evinizde bakım sağlıyoruz." }
+  ],
+  "featured": [
+    { "icon": "🐱", "title": "Kedi & Köpek Muayenesi", "text": "Rutin kontroller, teşhis, tedavi ve ilaç yönetimi." },
+    { "icon": "🔪", "title": "Ameliyat & Operasyon", "text": "Kısırlaştırma ve cerrahi operasyonlar deneyimli ellerde." },
+    { "icon": "🦜", "title": "Egzotik & Kuş Bakımı", "text": "Muhabbet kuşu ve egzotik dostlarınıza özel ilgi." },
+    { "icon": "🚑", "title": "Yoğun Bakım & Serum", "text": "Acil durumlarda yoğun bakım ve destek tedavisi." }
+  ],
+  "serviceGroups": [
+    { "icon": "🩺", "title": "Muayene & Teşhis", "items": ["Kedi muayenesi", "Köpek muayenesi", "Evcil hayvan muayenesi", "Teşhis ve tedavi", "İlaç yönetimi"] },
+    { "icon": "💉", "title": "Aşılama & Koruma", "items": ["Karma aşı", "Genel aşılama", "İç & dış parazit uygulaması", "SMS ile aşı takibi"] },
+    { "icon": "🔪", "title": "Cerrahi", "items": ["Ameliyat", "Operasyon", "Kısırlaştırma"] },
+    { "icon": "🔬", "title": "Laboratuvar & Görüntüleme", "items": ["Kan tahlili", "Biyokimya", "Hemogram", "Röntgen"] },
+    { "icon": "🦜", "title": "Egzotik & Kuş", "items": ["Egzotik hayvan bakımı", "Kuş bakımı", "Muhabbet kuşu"] },
+    { "icon": "🚑", "title": "Acil & Özel Hizmet", "items": ["Yoğun bakım", "Serum tedavisi", "Eve hizmet", "Özel hizmet"] }
+  ],
+  "reviews": [
+    { "name": "Sümeyye Erkoç", "source": "Google · 5/5", "text": "Kedimin 3. göz kapağı problemi için başka bir veteriner ameliyat gerektiğini söylemişti. Vet Anka ile yollarımız kesişti, Selim Bey gerçekten çok ilgilendi." },
+    { "name": "Yağmur Yağantekin", "source": "Google · 5/5", "text": "On aylık erkek kedimi kısırlaştırmak için burayı tercih ettim. Selim Bey sağ olsun gerçekten çok ilgilendi. Gönül rahatlığıyla tercih edebilirsiniz." },
+    { "name": "Yağmur Kara", "source": "Google · 5/5", "text": "Kedilerimin tüm işlemleri için Selim Bey'in kliniğine gidiyorum. Aşı takibi düzenli SMS ile bildiriliyor. Kısırlaştırma işlemi de çok güzel bir şekilde yapıldı." }
+  ]
+}

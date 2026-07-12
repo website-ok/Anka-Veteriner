@@ -33,7 +33,7 @@
         <p>Rutin bakımdan cerrahi operasyonlara, laboratuvar tahlillerinden eve hizmete kadar geniş bir yelpazede yanınızdayız.</p>
       </div>
 
-      <div class="service-groups">
+      <div class="service-groups" id="service-groups">
         <div class="service-group reveal">
           <h3><span>🩺</span> Muayene &amp; Teşhis</h3>
           <ul>
@@ -102,7 +102,7 @@
         <h2>Emin olmadığınız bir durum mu var?</h2>
         <p>Dostunuzun belirtilerini bizimle paylaşın, size en doğru yönlendirmeyi yapalım.</p>
         <div class="hero-actions">
-          <a href="tel:+905077881745" class="btn btn-primary">📞 0507 788 17 45</a>
+          <a href="tel:+905077881745" class="btn btn-primary">📞 <span data-bind="phone">0507 788 17 45</span></a>
           <a href="https://wa.me/905077881745?text=Merhaba,%20bir%20sorum%20var." target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp'tan Yaz</a>
         </div>
       </div>
@@ -114,7 +114,7 @@
       <div class="footer-inner">
         <div>
           <a href="index.html" class="brand"><span class="logo">🐾</span>Vet Anka <span>Veteriner</span></a>
-          <p style="color:var(--text-muted); font-size:0.88rem; max-width:300px;">Sefaköy, Küçükçekmece'de kedi, köpek, kuş ve egzotik hayvanlar için şefkatli veteriner hizmeti.</p>
+          <p style="color:var(--text-muted); font-size:0.88rem; max-width:300px;" data-bind="footerAbout">Sefaköy, Küçükçekmece'de kedi, köpek, kuş ve egzotik hayvanlar için şefkatli veteriner hizmeti.</p>
         </div>
         <div class="footer-col">
           <h4>Menü</h4>
@@ -124,19 +124,20 @@
         </div>
         <div class="footer-col">
           <h4>İletişim</h4>
-          <a href="tel:+905077881745">📞 0507 788 17 45</a>
+          <a href="tel:+905077881745">📞 <span data-bind="phone">0507 788 17 45</span></a>
           <a href="https://wa.me/905077881745" target="_blank" rel="noopener">💬 WhatsApp</a>
           <p>📍 Mektep Sk. No:19<br>Sefaköy, Küçükçekmece</p>
         </div>
       </div>
       <div class="footer-bottom">
-        © 2026 Vet Anka Veteriner Kliniği · Sefaköy, Küçükçekmece / İstanbul
+        © 2026 Vet Anka Veteriner Kliniği · Sefaköy, Küçükçekmece / İstanbul · <a href="admin.html">Yönetim</a>
       </div>
     </div>
   </footer>
 
   <a class="wa-float" href="https://wa.me/905077881745?text=Merhaba,%20randevu%20almak%20istiyorum." target="_blank" rel="noopener" aria-label="WhatsApp'tan yaz">💬</a>
 
+  <script src="js/content.js"></script>
   <script src="js/site.js"></script>
 </body>
 </html>

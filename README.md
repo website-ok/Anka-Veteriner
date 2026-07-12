@@ -1,11 +1,8 @@
 # Vet Anka Veteriner Kliniği — Web Sitesi
 
-**🌐 Canlı site:** https://anka-veteriner-22f10.web.app
-**🔐 Yönetim paneli:** https://anka-veteriner-22f10.web.app/admin.html
-
 Sefaköy, Küçükçekmece'deki Vet Anka Veteriner Kliniği için tanıtım ve iletişim amaçlı,
-mobil uyumlu web sitesi. İçerik, giriş korumalı bir yönetim panelinden düzenlenir ve
-**Kaydet'e basıldığında tüm ziyaretçilerde anında canlı** olur (Firebase Firestore).
+mobil uyumlu **statik** web sitesi. Backend yoktur; içerik giriş korumalı bir yönetim
+panelinden düzenlenir. **Kaydet'e basıldığında açık olan site sekmesi anında güncellenir.**
 
 ## Sayfalar
 
@@ -13,27 +10,33 @@ mobil uyumlu web sitesi. İçerik, giriş korumalı bir yönetim panelinden düz
 - `hizmetler.html` — Tüm hizmetlerin kategorili listesi
 - `galeri.html` — Fotoğraf / video / YouTube galerisi
 - `iletisim.html` — Adres, telefon, WhatsApp, harita ve yol tarifi
-- `admin.html` — Yönetim paneli (Firebase Auth ile giriş)
+- `admin.html` — Yönetim paneli (yerel şifre ile giriş)
 
 ## Yönetim paneli
 
-- Giriş: Firebase Authentication (e-posta / şifre)
+- Giriş: yerel e-posta + şifre (demo bilgileri `js/admin.js` içinde `ADMIN_EMAIL` / `ADMIN_PASSWORD`).
 - Düzenlenebilenler: iletişim bilgileri, çalışma saati, puanlar, ana sayfa metinleri,
   "Neden biz" kartları, öne çıkan hizmetler, hizmet grupları, yorumlar, hero görseli
   ve galeri (görsel / video / YouTube ekle-çıkar).
-- **Kaydet** → Firestore'a yazar → tüm ziyaretçilerde anında yansır.
+- **Kaydet** → değişiklik tarayıcının `localStorage`'ına yazılır; açık olan site
+  sekmesi anında güncellenir (aynı tarayıcı/cihaz).
+- **content.json indir** → o anki içeriği `content.json` olarak indirir.
 
-## Kurulum
+## İçeriği kalıcı yapmak (herkese açık)
 
-Yönetim panelinin canlı çalışması için tek seferlik Firebase kurulumu gerekir.
-Adımlar: [KURULUM.md](KURULUM.md). Kurulum tamamlanana kadar site,
-`content.json` içindeki varsayılan içerikle sorunsuz çalışır.
+`localStorage` yalnızca o tarayıcıda geçerlidir. Değişikliği kalıcı ve herkese açık
+yapmak için:
+
+1. Panelde düzenle → **content.json indir**.
+2. İnen dosyayı proje kökündeki `content.json` ile değiştir.
+3. GitHub'a commit + push et (yayında olan kopya güncellenir).
 
 ## İçerik akışı
 
-- **content.js** içeriği önce Firestore'dan (canlı), yoksa `content.json`'dan okur.
-- **admin.js** panelden yapılan düzenlemeyi Firestore'a yazar.
-- `content.json` varsayılan/yedek içeriktir; Firebase kurulmadan da site dolu görünür.
+- **content.js** içeriği önce `localStorage`'dan (panelden kaydedilen), yoksa
+  `content.json`'dan okur. Başka sekmede Kaydet'e basılınca `storage` olayıyla canlı güncellenir.
+- **admin.js** panelden yapılan düzenlemeyi `localStorage`'a yazar; `content.json` olarak indirtir.
+- `content.json` varsayılan/kaynak içeriktir; panel hiç kullanılmadan da site dolu görünür.
 
 ## Yerelde çalıştırma
 
@@ -42,11 +45,18 @@ Adımlar: [KURULUM.md](KURULUM.md). Kurulum tamamlanana kadar site,
 python Anka-Veteriner/scripts/serve.py
 ```
 
-Tarayıcıda `http://localhost:8000` açın. (Firebase JS SDK CDN'den yüklenir; internet gerekir.)
+Tarayıcıda `http://localhost:8000` açın. Demo akışı: bir sekmede `index.html`,
+başka sekmede `admin.html` açın; panelde düzenleyip **Kaydet**'e basın → site sekmesi
+anında değişir.
+
+## Canlıya alma
+
+Statik site olduğu için herhangi bir statik barındırmaya (GitHub Pages, Netlify,
+satın alınan hosting + domain) dosyaları kopyalamak yeterlidir; ekstra kurulum yoktur.
 
 ## Teknik
 
-- HTML + CSS + JavaScript (framework yok), Firebase JS SDK (CDN, modül)
+- HTML + CSS + JavaScript (framework/bağımlılık yok)
 - Google Fonts (Poppins, Inter), Google Maps embed
 - Mobil menü ve kaydırma animasyonları için küçük bir `js/site.js`
 

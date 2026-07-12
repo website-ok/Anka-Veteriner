@@ -1,8 +1,8 @@
-// İçerik yükleyici (modül).
-// Öncelik: Firestore (canlı, panelden kaydedilen) -> content.json (varsayılan/yedek).
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { firebaseConfig, isConfigured } from "./firebase-config.js";
+// İçerik yükleyici (lokal, backend yok).
+// Öncelik: localStorage (panelden kaydedilen) -> content.json (varsayılan/yedek).
+// Panelde "Kaydet"e basılınca, açık olan site sekmesi "storage" olayıyla anında güncellenir.
+
+const LS_KEY = "anka_content";
 
 function esc(s) {
   return String(s == null ? "" : s)
@@ -137,22 +137,28 @@ function loadFromJson() {
     .catch(() => {});
 }
 
-// Firestore varsa canlı dinle; yoksa content.json'a düş.
-if (isConfigured) {
+function loadLocal() {
   try {
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    onSnapshot(
-      doc(db, "site", "content"),
-      (snap) => {
-        if (snap.exists()) apply(snap.data());
-        else loadFromJson();
-      },
-      () => loadFromJson()
-    );
-  } catch (e) {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) {
+      apply(JSON.parse(raw));
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+// İlk yükleme: panelden kaydedilen içerik varsa onu, yoksa content.json'u kullan.
+if (!loadLocal()) loadFromJson();
+
+// Panelde (başka sekmede) "Kaydet"e basılınca site anında güncellensin.
+window.addEventListener("storage", (e) => {
+  if (e.key !== LS_KEY) return;
+  if (e.newValue) {
+    try {
+      apply(JSON.parse(e.newValue));
+    } catch (_) {}
+  } else {
     loadFromJson();
   }
-} else {
-  loadFromJson();
-}
+});

@@ -1,11 +1,12 @@
-// Vet Anka — Yönetim Paneli (Firebase)
-// Giriş: Firebase Auth (e-posta/şifre). Kaydet: Firestore'a yazar -> tüm ziyaretçilerde canlı.
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import {
-  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { firebaseConfig, isConfigured } from "./firebase-config.js";
+// Vet Anka — Yönetim Paneli (lokal, backend yok).
+// Giriş: basit yerel şifre. Kaydet: localStorage'a yazar -> açık site sekmesi anında güncellenir.
+// İçeriği kalıcı yapmak için "Yedek indir" ile content.json'u alıp yayınlayın (GitHub).
+
+const LS_KEY = "anka_content";
+const SESSION_KEY = "anka_admin";
+// Demo giriş bilgileri — canlıya alırken değiştirin. (Lokal demo olduğu için istemci tarafında.)
+const ADMIN_EMAIL = "admin@ankaveteriner.com";
+const ADMIN_PASSWORD = "anka1234";
 
 const SCALARS = [
   "clinicName", "phone", "whatsapp", "addressLine1", "addressLine2", "hours",
@@ -47,16 +48,6 @@ function setPreview(img, src) {
   else img.removeAttribute("src");
 }
 
-/* ---------- Firebase ---------- */
-let db = null;
-let auth = null;
-if (isConfigured) {
-  const app = initializeApp(firebaseConfig);
-  db = getFirestore(app);
-  auth = getAuth(app);
-}
-const CONTENT_DOC = () => doc(db, "site", "content");
-
 /* ---------- Ekran geçişleri ---------- */
 function showPanel() {
   $("login").style.display = "none";
@@ -68,26 +59,26 @@ function showLogin() {
   $("login").style.display = "flex";
 }
 
-/* ---------- Giriş ---------- */
+/* ---------- Giriş (yerel şifre) ---------- */
 $("login-form").addEventListener("submit", (e) => {
   e.preventDefault();
-  if (!isConfigured) return;
-  const email = $("u").value.trim();
-  const pass = $("p").value;
   $("login-error").textContent = "";
-  signInWithEmailAndPassword(auth, email, pass).catch(() => {
+  const email = $("u").value.trim().toLowerCase();
+  if (email === ADMIN_EMAIL.toLowerCase() && $("p").value === ADMIN_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, "1");
+    showPanel();
+  } else {
     $("login-error").textContent = "E-posta veya şifre hatalı.";
-  });
+  }
 });
 
 /* ---------- İçerik yükleme ---------- */
 function loadContent() {
-  getDoc(CONTENT_DOC())
-    .then((snap) => {
-      if (snap.exists()) renderAll(snap.data());
-      else loadSeed();
-    })
-    .catch(() => loadSeed());
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw) { renderAll(JSON.parse(raw)); return; }
+  } catch (e) {}
+  loadSeed();
 }
 function loadSeed() {
   fetch("content.json")
@@ -255,16 +246,12 @@ document.addEventListener("change", (e) => {
 
 /* ---------- Kaydet / Yedek / Çıkış ---------- */
 $("btn-save").addEventListener("click", () => {
-  const btn = $("btn-save");
-  btn.disabled = true;
-  setDoc(CONTENT_DOC(), collectAll())
-    .then(() => toast("Kaydedildi ✓ Değişiklikler yayında."))
-    .catch((err) => {
-      if (String(err).includes("longer than") || String(err).includes("1048576"))
-        toast("Belge çok büyük. Görselleri URL ile ekleyin veya küçültün.");
-      else toast("Kaydedilemedi. Bağlantınızı kontrol edin.");
-    })
-    .finally(() => { btn.disabled = false; });
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(collectAll()));
+    toast("Kaydedildi ✓ Açık site sekmesinde anında güncellendi.");
+  } catch (err) {
+    toast("Kaydedilemedi: içerik çok büyük olabilir. Gömülü görseller yerine img/ yolu kullanın.");
+  }
 });
 
 $("btn-download").addEventListener("click", () => {
@@ -275,22 +262,14 @@ $("btn-download").addEventListener("click", () => {
   a.download = "content.json";
   a.click();
   URL.revokeObjectURL(a.href);
-  toast("Yedek (content.json) indirildi");
+  toast("content.json indirildi — kalıcı yapmak için repoya koyup yayınlayın.");
 });
 
 $("btn-logout").addEventListener("click", () => {
-  if (auth) signOut(auth);
+  sessionStorage.removeItem(SESSION_KEY);
+  showLogin();
 });
 
 /* ---------- Başlangıç ---------- */
-if (!isConfigured) {
-  showLogin();
-  $("login-error").innerHTML =
-    "⚠️ Firebase kurulumu tamamlanmadı.<br>Lütfen <strong>KURULUM.md</strong> adımlarını izleyip <code>js/firebase-config.js</code> dosyasını doldurun.";
-  $("login-form").querySelector("button[type=submit]").disabled = true;
-} else {
-  onAuthStateChanged(auth, (user) => {
-    if (user) showPanel();
-    else showLogin();
-  });
-}
+if (sessionStorage.getItem(SESSION_KEY)) showPanel();
+else showLogin();

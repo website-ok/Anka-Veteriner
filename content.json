@@ -13,6 +13,12 @@
   "heroTitle": "Dostlarınız emin ellerde",
   "heroLead": "Kedi, köpek, kuş ve egzotik hayvanlar için şefkatli ve titiz bakım. Muayeneden ameliyata, aşıdan laboratuvara kadar tüm ihtiyaçlarınız tek bir çatı altında.",
   "footerAbout": "Sefaköy, Küçükçekmece'de kedi, köpek, kuş ve egzotik hayvanlar için şefkatli veteriner hizmeti.",
+  "heroImage": "img/genel-veteriner-muayenesi.jpg",
+  "gallery": [
+    { "type": "image", "src": "img/genel-veteriner-muayenesi.jpg", "caption": "Genel veteriner muayenesi" },
+    { "type": "image", "src": "img/kedi-kopek-bakim.jpg", "caption": "Kedi & köpek bakımı" },
+    { "type": "image", "src": "img/kopek-muayenesi.jpg", "caption": "Köpek muayenesi" }
+  ],
   "whyCards": [
     { "icon": "🩺", "title": "Uzman Muayene", "text": "Kedi, köpek, kuş ve egzotik hayvanlar için detaylı sağlık kontrolü ve doğru teşhis." },
     { "icon": "💉", "title": "Düzenli Aşı Takibi", "text": "Karma ve iç-dış parazit aşılarınız SMS hatırlatmalarıyla hiç aksamadan takip edilir." },

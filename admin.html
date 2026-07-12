@@ -121,6 +121,17 @@
     }
     .btn-add:hover { background: rgba(20,169,155,0.08); }
 
+    .media-tools { display: flex; gap: 0.6rem; align-items: center; margin-top: 0.5rem; flex-wrap: wrap; }
+    .media-prev { max-width: 120px; max-height: 80px; border-radius: 8px; border: 1px solid var(--border); object-fit: cover; }
+    .media-prev:not([src]), .media-prev[src=""] { display: none; }
+    .btn-file {
+      background: rgba(20,169,155,0.10); border: 1px solid var(--border); color: var(--teal);
+      border-radius: 8px; padding: 0.4rem 0.8rem; font-size: 0.82rem; cursor: pointer; font-weight: 600;
+    }
+    .btn-file:hover { border-color: var(--teal); }
+    .item-type-add { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    hr.sep { border: none; border-top: 1px solid var(--border); margin: 1.4rem 0; }
+
     .toast {
       position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%) translateY(2rem);
       background: var(--ink); color: #fff; padding: 0.8rem 1.4rem; border-radius: 999px;
@@ -140,8 +151,8 @@
       <h1>Yönetim Paneli</h1>
       <p class="sub">Vet Anka Veteriner Kliniği</p>
       <div class="field">
-        <label for="u">Kullanıcı adı</label>
-        <input type="text" id="u" autocomplete="username" required>
+        <label for="u">E-posta</label>
+        <input type="email" id="u" autocomplete="username" required>
       </div>
       <div class="field">
         <label for="p">Şifre</label>
@@ -158,12 +169,9 @@
       <div class="container" style="width:100%; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap;">
         <span class="brand"><span class="logo">🐾</span> Yönetim</span>
         <div class="admin-actions">
-          <button class="btn btn-primary btn-sm" id="btn-save">💾 Kaydet</button>
-          <button class="btn btn-outline btn-sm" id="btn-download">⬇️ content.json indir</button>
-          <button class="btn btn-outline btn-sm" id="btn-upload">⬆️ Yükle</button>
-          <input type="file" id="file-input" accept="application/json,.json" hidden>
+          <button class="btn btn-primary btn-sm" id="btn-save">💾 Kaydet (canlı)</button>
           <a class="btn btn-outline btn-sm" href="index.html" target="_blank" rel="noopener">👁️ Önizle</a>
-          <button class="btn btn-outline btn-sm" id="btn-reset">↩️ Varsayılan</button>
+          <button class="btn btn-outline btn-sm" id="btn-download">⬇️ Yedek indir</button>
           <button class="btn btn-outline btn-sm" id="btn-logout">Çıkış</button>
         </div>
       </div>
@@ -171,9 +179,9 @@
 
     <div class="admin-wrap">
       <div class="notice">
-        <strong>Nasıl yayınlanır?</strong> Değişikliklerinizi yaptıktan sonra <strong>Kaydet</strong>'e basın — değişiklik bu cihazda hemen görünür.
-        Tüm ziyaretçilere yansıması için <strong>content.json indir</strong>'e basıp indirdiğiniz dosyayı GitHub deposundaki
-        <code>content.json</code> dosyasının yerine yükleyin.
+        <strong>Nasıl yayınlanır?</strong> Düzenlemenizi yapın ve <strong>Kaydet</strong>'e basın —
+        değişiklikler <strong>anında tüm ziyaretçilerde canlı</strong> olur, başka bir işlem gerekmez.
+        <em>Yedek indir</em> yalnızca isterseniz elinizde bir kopya bulundurmak içindir.
       </div>
 
       <!-- İletişim -->
@@ -227,6 +235,36 @@
         <div class="field"><label for="f-footerAbout">Alt bilgi (footer) açıklaması</label><textarea id="f-footerAbout"></textarea></div>
       </div>
 
+      <!-- Medya: hero görseli + galeri -->
+      <div class="admin-section">
+        <h2>🖼️ Medya (Görsel / Video / YouTube)</h2>
+
+        <div class="field">
+          <label for="f-heroImage">Ana sayfa üst (hero) görseli — dosya yolu, URL ya da bilgisayardan seçin</label>
+          <input type="text" id="f-heroImage" placeholder="img/genel-veteriner-muayenesi.jpg">
+          <div class="media-tools">
+            <button type="button" class="btn-file" data-pick="hero-file">📁 Dosya seç</button>
+            <input type="file" id="hero-file" accept="image/*" hidden>
+            <img class="media-prev" id="hero-preview" alt="">
+          </div>
+        </div>
+
+        <hr class="sep">
+
+        <h2 style="font-size:1.05rem;">Galeri Öğeleri</h2>
+        <p style="color:var(--text-muted); font-size:0.85rem; margin-bottom:1rem;">
+          Görselleri <strong>img/</strong> klasörüne yükleyip yolunu yazabilir (ör. <code>img/kedi.jpg</code>),
+          bir bağlantı yapıştırabilir ya da <strong>Dosya seç</strong> ile doğrudan gömebilirsiniz. Videolar için mp4 bağlantısı,
+          YouTube için video linki yeterlidir.
+        </p>
+        <div id="list-gallery"></div>
+        <div class="item-type-add">
+          <button class="btn-add" style="width:auto;" data-add-media="image">+ Görsel ekle</button>
+          <button class="btn-add" style="width:auto;" data-add-media="video">+ Video ekle</button>
+          <button class="btn-add" style="width:auto;" data-add-media="youtube">+ YouTube ekle</button>
+        </div>
+      </div>
+
       <!-- Neden biz kartları -->
       <div class="admin-section">
         <h2>✨ "Neden Vet Anka?" Kartları</h2>
@@ -259,6 +297,6 @@
 
   <div class="toast" id="toast"></div>
 
-  <script src="js/admin.js"></script>
+  <script type="module" src="js/admin.js"></script>
 </body>
 </html>

@@ -1,8 +1,6 @@
-// İçerik yükleyici (lokal, backend yok).
-// Öncelik: localStorage (panelden kaydedilen) -> content.json (varsayılan/yedek).
-// Panelde "Kaydet"e basılınca, açık olan site sekmesi "storage" olayıyla anında güncellenir.
-
-const LS_KEY = "anka_content";
+// İçerik yükleyici. İçerik content.json'dan okunur.
+// content.json, /admin (Decap CMS) üzerinden düzenlenip repoya commit'lenir;
+// Cloudflare Pages yeniden yayınlar ve site güncel içeriği gösterir.
 
 function esc(s) {
   return String(s == null ? "" : s)
@@ -137,28 +135,4 @@ function loadFromJson() {
     .catch(() => {});
 }
 
-function loadLocal() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (raw) {
-      apply(JSON.parse(raw));
-      return true;
-    }
-  } catch (e) {}
-  return false;
-}
-
-// İlk yükleme: panelden kaydedilen içerik varsa onu, yoksa content.json'u kullan.
-if (!loadLocal()) loadFromJson();
-
-// Panelde (başka sekmede) "Kaydet"e basılınca site anında güncellensin.
-window.addEventListener("storage", (e) => {
-  if (e.key !== LS_KEY) return;
-  if (e.newValue) {
-    try {
-      apply(JSON.parse(e.newValue));
-    } catch (_) {}
-  } else {
-    loadFromJson();
-  }
-});
+loadFromJson();

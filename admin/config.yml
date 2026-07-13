@@ -1,0 +1,93 @@
+# Decap CMS yapılandırması — Vet Anka Veteriner
+# İçerik tek bir dosyada tutulur: content.json (site bunu okur).
+# Kaydet -> GitHub'a commit -> Cloudflare Pages otomatik yeniden yayınlar.
+
+backend:
+  name: github
+  repo: website-ok/Anka-Veteriner
+  branch: main
+  # Cloudflare Worker OAuth proxy adresi (bkz. CLOUDFLARE.md, Adım 4):
+  base_url: https://REPLACE-WITH-OAUTH-WORKER-URL
+
+# Lokal önizleme: `npx decap-server` çalışırken /admin dosyaları
+# doğrudan yerel repoyu düzenler (GitHub/OAuth gerekmez).
+local_backend: true
+
+# Yüklenen görseller repoda img/ klasörüne commit'lenir.
+media_folder: "img"
+public_folder: "/img"
+
+locale: "tr"
+
+collections:
+  - name: site
+    label: "Site İçeriği"
+    files:
+      - name: content
+        label: "Ana İçerik"
+        file: "content.json"
+        description: "Sitenin tüm metin, görsel ve listelerini buradan düzenleyin."
+        fields:
+          - { name: clinicName, label: "Klinik adı", widget: string }
+          - { name: phone, label: "Telefon (görünen)", widget: string }
+          - { name: whatsapp, label: "WhatsApp / arama (sadece rakam, ör. 905077881745)", widget: string }
+          - { name: addressLine1, label: "Adres — 1. satır", widget: string }
+          - { name: addressLine2, label: "Adres — 2. satır", widget: string }
+          - { name: hours, label: "Çalışma saati notu", widget: string }
+          - { name: googleScore, label: "Google puanı", widget: string }
+          - { name: googleCount, label: "Google yorum sayısı", widget: string }
+          - { name: yandexScore, label: "Yandex puanı", widget: string }
+          - { name: yandexCount, label: "Yandex yorum sayısı", widget: string }
+          - { name: heroEyebrow, label: "Üst etiket", widget: string }
+          - { name: heroTitle, label: "Ana başlık", widget: string }
+          - { name: heroLead, label: "Ana açıklama", widget: text }
+          - { name: footerAbout, label: "Alt bilgi (footer) açıklaması", widget: text }
+          - { name: heroImage, label: "Hero (üst) görseli", widget: image, required: false }
+
+          - name: gallery
+            label: "Galeri"
+            label_singular: "Galeri öğesi"
+            widget: list
+            fields:
+              - { name: type, label: "Tür", widget: select, options: ["image", "video", "youtube"], default: "image" }
+              - { name: src, label: "Görsel yolu / video URL / YouTube linki", widget: string }
+              - { name: caption, label: "Açıklama", widget: string, required: false }
+
+          - name: whyCards
+            label: "\"Neden Vet Anka?\" Kartları"
+            label_singular: "Kart"
+            widget: list
+            fields:
+              - { name: icon, label: "Simge (emoji)", widget: string }
+              - { name: title, label: "Başlık", widget: string }
+              - { name: text, label: "Metin", widget: text }
+
+          - name: featured
+            label: "Öne Çıkan Hizmetler"
+            label_singular: "Kart"
+            widget: list
+            fields:
+              - { name: icon, label: "Simge (emoji)", widget: string }
+              - { name: title, label: "Başlık", widget: string }
+              - { name: text, label: "Metin", widget: text }
+
+          - name: serviceGroups
+            label: "Hizmet Grupları"
+            label_singular: "Grup"
+            widget: list
+            fields:
+              - { name: icon, label: "Simge (emoji)", widget: string }
+              - { name: title, label: "Grup başlığı", widget: string }
+              - name: items
+                label: "Hizmetler"
+                widget: list
+                field: { name: item, label: "Hizmet", widget: string }
+
+          - name: reviews
+            label: "Yorumlar"
+            label_singular: "Yorum"
+            widget: list
+            fields:
+              - { name: name, label: "İsim", widget: string }
+              - { name: source, label: "Kaynak (ör. Google · 5/5)", widget: string }
+              - { name: text, label: "Yorum", widget: text }
